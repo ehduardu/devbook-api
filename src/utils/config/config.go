@@ -22,12 +22,22 @@ type internalSecret struct {
 	SecretKey string `json:"secret_key,omitempty"`
 }
 
+type databaseCredentials struct {
+	User         string `json:"db_user,omitempty"`
+	Password     string `json:"db_password,omitempty"`
+	Host         string `json:"db_host,omitempty"`
+	Name         string `json:"db_name,omitempty"`
+	InstanceName string `json:"instance_name,omitempty"`
+}
+
 var (
 	INTERNAL_SECRET      internalSecret
 	FIREBASE_CREDENTIALS firebaseCredentials
+	DATABASE             databaseCredentials
 )
 
 func LoadVariables() {
 	utils.ParseFile("./.credentials/internal-secret.json", &INTERNAL_SECRET)
 	utils.ParseFile("./.credentials/firebase-adminsdk.json", &FIREBASE_CREDENTIALS)
+	utils.ParseFile("./.credentials/database.json", &DATABASE)
 }

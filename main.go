@@ -9,14 +9,10 @@ import (
 )
 
 func main() {
-	fmt.Println("Servidor rodando")
-
+	config.LoadVariables()
 	r := router.Generate()
 
-	config.LoadVariables()
-
-	fmt.Println(config.INTERNAL_SECRET)
-	fmt.Println(config.FIREBASE_CREDENTIALS)
-
+	fmt.Printf("Servidor rodando na porta 5000")
 	log.Fatal(http.ListenAndServe(":5000", r))
+
 }
