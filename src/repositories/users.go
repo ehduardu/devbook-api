@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"api/src/models"
+	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -14,12 +15,20 @@ func NewUserRepository(db *gorm.DB) *Users {
 	return &Users{db}
 }
 
-func (repository Users) Create(user models.User) error {
-
+func (repository Users) Create(user models.User) (models.User, error) {
 	err := repository.db.Create(&user).Error
 	if err != nil {
-		return err
+		return user, err
 	}
 
-	return nil
+	return user, nil
+}
+
+func (repository Users) List(nameOrNick string) ([]models.User, error) {
+	var users []models.User
+
+	nameOrNick = fmt.Sprintf("%%%s%%", nameOrNick) //%nameOrNick%
+	err := repository.db.Where("name ILIKE ?", nameOrNick).Or("nick LIKE ?", nameOrNick).Find(&users).Error
+
+	return users, err
 }

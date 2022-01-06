@@ -31,7 +31,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	db := database.GetDB()
 
 	repository := repositories.NewUserRepository(db)
-	err = repository.Create(user)
+	user, err = repository.Create(user)
 	if err != nil {
 		responses.Erro(w, http.StatusInternalServerError, err)
 		return
@@ -41,7 +41,19 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Buscando todos usuários"))
+	nameOrNick := r.URL.Query().Get("user")
+
+	db := database.GetDB()
+
+	repository := repositories.NewUserRepository(db)
+	users, err := repository.List(nameOrNick)
+
+	if err != nil {
+		responses.Erro(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	responses.JSON(w, http.StatusOK, users)
 }
 
 func GetUserById(w http.ResponseWriter, r *http.Request) {
