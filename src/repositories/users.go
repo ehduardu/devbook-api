@@ -28,7 +28,7 @@ func (repository Users) List(nameOrNick string) ([]models.User, error) {
 	var users []models.User
 
 	nameOrNick = fmt.Sprintf("%%%s%%", nameOrNick) //%nameOrNick%
-	err := repository.db.Where("name ILIKE ?", nameOrNick).Or("nick LIKE ?", nameOrNick).Find(&users).Error
+	err := repository.db.Select("ID", "name", "nick", "email").Where("name ILIKE ?", nameOrNick).Or("nick LIKE ?", nameOrNick).Find(&users).Error
 
 	return users, err
 }
