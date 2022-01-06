@@ -7,6 +7,9 @@ require github.com/gorilla/mux v1.8.0
 require (
 	cloud.google.com/go v0.100.0 // indirect
 	github.com/GoogleCloudPlatform/cloudsql-proxy v1.28.0 // indirect
+	github.com/go-playground/locales v0.14.0 // indirect
+	github.com/go-playground/universal-translator v0.18.0 // indirect
+	github.com/go-playground/validator/v10 v10.10.0 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.1.1 // indirect
@@ -20,6 +23,7 @@ require (
 	github.com/jackc/pgx/v4 v4.14.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.3 // indirect
+	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/lib/pq v1.10.4 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
@@ -36,6 +40,6 @@ require (
 	google.golang.org/genproto v0.0.0-20211221195035-429b39de9b1c // indirect
 	google.golang.org/grpc v1.40.1 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
-	gorm.io/gorm v1.22.4 // indirect
 	gorm.io/driver/postgres v1.2.3 // indirect
+	gorm.io/gorm v1.22.4 // indirect
 )
