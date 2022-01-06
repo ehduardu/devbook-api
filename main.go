@@ -1,6 +1,7 @@
 package main
 
 import (
+	"api/src/database"
 	"api/src/router"
 	"api/src/utils/config"
 	"fmt"
@@ -8,11 +9,16 @@ import (
 	"net/http"
 )
 
-func main() {
-	config.LoadVariables()
+func initializeRouter() {
 	r := router.Generate()
 
 	fmt.Printf("Servidor rodando na porta 5000")
 	log.Fatal(http.ListenAndServe(":5000", r))
+}
 
+func main() {
+	config.LoadVariables()
+	database.Setup()
+
+	initializeRouter()
 }

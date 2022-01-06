@@ -1,40 +1,39 @@
 package database
 
 import (
+	"api/src/models"
 	"api/src/utils/config"
-	"database/sql"
 	"fmt"
+	"log"
 
 	_ "github.com/GoogleCloudPlatform/cloudsql-proxy/proxy/dialers/postgres"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-func Connect() (*sql.DB, error) {
+var DB *gorm.DB
 
-	var DSN = fmt.Sprintf("host=%s user=%s dbname=%s password=%s sslmode=disable",
+func Setup() {
+	var dsn = fmt.Sprintf("host=%s user=%s dbname=%s password=%s sslmode=disable",
 		config.DATABASE.InstanceName,
 		config.DATABASE.User,
 		config.DATABASE.Name,
 		config.DATABASE.Password,
 	)
 
-	connection, err := gorm.Open(postgres.New(postgres.Config{
+	db, err := gorm.Open(postgres.New(postgres.Config{
 		DriverName: "cloudsqlpostgres",
-		DSN:        DSN,
+		DSN:        dsn,
 	}))
 
 	if err != nil {
-		return nil, err
+		log.Fatal(err)
 	}
 
-	db, _ := connection.DB()
+	db.AutoMigrate(&models.User{})
+	DB = db
+}
 
-	if err = db.Ping(); err != nil {
-		db.Close()
-		return nil, err
-	}
-
-	return db, err
-
+func GetDB() *gorm.DB {
+	return DB
 }
