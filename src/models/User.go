@@ -15,12 +15,17 @@ type User struct {
 	CreatedAt time.Time `gorm:"autoCreateTime" json:"createdAt,omitempty"`
 }
 
-func (user User) Check() error {
+func (user User) Check(stage string) error {
 	var validate = validator.New()
 
-	if err := validate.Struct(user); err != nil {
-		return err
+	if stage == "register" {
+		if err := validate.Struct(user); err != nil {
+			return err
+		}
+	} else {
+		if err := validate.StructExcept(user, "Password"); err != nil {
+			return err
+		}
 	}
-
 	return nil
 }

@@ -32,3 +32,31 @@ func (repository Users) List(nameOrNick string) ([]models.User, error) {
 
 	return users, err
 }
+
+func (repository Users) Get(userId uint64) (models.User, error) {
+	var user models.User
+
+	err := repository.db.Select("ID", "name", "nick", "email").Where("id = ?", userId).First(&user).Error
+
+	return user, err
+}
+
+func (repository Users) Update(userId uint64, user models.User) error {
+	var dbUser models.User
+	dbUser.ID = userId
+
+	repository.db.First(&dbUser)
+
+	dbUser.Name = user.Name
+	dbUser.Nick = user.Nick
+	dbUser.Email = user.Email
+
+	err := repository.db.Save(&dbUser).Error
+
+	// err := repository.db.Update(&user).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
