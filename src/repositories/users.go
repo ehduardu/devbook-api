@@ -60,3 +60,12 @@ func (repository Users) Update(userId uint64, user models.User) error {
 
 	return nil
 }
+
+func (repository Users) Delete(userId uint64) error {
+	var dbUser models.User
+	dbUser.ID = userId
+
+	err := repository.db.Delete(&dbUser).Error
+
+	return err
+}
